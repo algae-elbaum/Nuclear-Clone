@@ -1,0 +1,19 @@
+Timeline:
+*) Render flat world
+*) Make player entity (circle) which gets placed on world and has wasd controls
+*) Add enemy entities which just charge the player and hit for a bit of melee damage
+*) Implement projectiles (also circles)
+*) Add enemy entities (also also circles) which shoot dodgeable projectiles at player
+*) Let player shoot their own projectiles with m1
+*) Make terrain interesting
+*) Make projectiles interesting (homing, splitting, explosive, stat effects, rate of fire)
+*) Add items
+*) Eg health packs, weapons
+*) Add more varied enemies (stats, size, different pathing, flanking?)
+*) Maybe even some sort of machine learning/genetics to make enemies that learn
+
+
+Week 0: Get build running with all dependencies
+Week 1: 1st two points
+Week 2: Next two points
+Weeks 3+: 6 hrs of work per week. (unclear how long individual points will take)
