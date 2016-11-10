@@ -1,8 +1,8 @@
 [gd_scene load_steps=4 format=1]
 
 [ext_resource path="res://assets/ground_stone.png" type="Texture" id=1]
-[ext_resource path="res://env_tileset.tres" type="TileSet" id=2]
-[ext_resource path="res://player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/env_tileset.tres" type="TileSet" id=2]
+[ext_resource path="res://src/player.tscn" type="PackedScene" id=3]
 
 [node name="map1" type="Node2D"]
 
@@ -40,6 +40,6 @@ tile_data = IntArray( -1835022, 1, -1835021, 1, -1835020, 1, -1835011, 1, -18350
 
 [node name="player" parent="." instance=ExtResource( 3 )]
 
-transform/pos = Vector2( 2, 2 )
+transform/pos = Vector2( -8, 2 )
 
 
