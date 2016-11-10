@@ -1,2 +1,8 @@
 11/8
 Worked through tutorial a bit, made pong clone
+
+11/9
+Map rendered with tiled background and manually placed walls.
+Player character has WASD controls and collides with walls correctly.
+
+Next: will add enemies and projectiles

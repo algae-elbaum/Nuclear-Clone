@@ -1,0 +1,3 @@
+bowling_ball.png is from Godot demos
+64_x_64_tiles__by_fang.png is from fang on deviantart (many of the tiles are cut out of that image)
+stone_floors.png is from http://www.wildbunny.co.uk/blog/2012/03/01/designing-a-retro-pixel-art-tile-set/

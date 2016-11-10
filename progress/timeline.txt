@@ -15,5 +15,5 @@ Timeline:
 
 Week 0: Get build running with all dependencies
 Week 1: 1st two points
-Week 2: Next two points
+Week 2: Next four points
 Weeks 3+: 6 hrs of work per week. (unclear how long individual points will take)
