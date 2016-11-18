@@ -49,7 +49,7 @@ func _fixed_process(delta):
 func _input(event):
 	if (event.is_action("fire") and event.is_pressed()):
 		var inv = get_node("inventory")
-		inv.fire_active(get_global_mouse_pos(), vel)
+		inv.fire_active(get_global_mouse_pos(), vel, [self])
 	
 func _ready():
 	set_fixed_process(true)

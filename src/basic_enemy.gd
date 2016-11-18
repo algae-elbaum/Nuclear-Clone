@@ -22,7 +22,7 @@ func consider_firing():
 		return
 	if (randf() < firing_probability):
 		var player_pos = player.get_global_pos()
-		get_node("inventory").fire_active(player_pos, vel)
+		get_node("inventory").fire_active(player_pos, vel, ["enemies"])
 
 func take_damage(dam):
 	health = health - dam
@@ -49,6 +49,7 @@ func _fixed_process(delta):
 	consider_firing()
 
 func _ready():
+	add_to_group("enemies")
 	player = get_node("../player")
 	update_vel()
 	add_collision_exception_with(get_node("../player"))

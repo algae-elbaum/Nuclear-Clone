@@ -5,10 +5,15 @@ const BASE_SPEED = 500
 var vel = Vector2(0, 0)
 
 var damage = 1
-var cooldown = .25
+var cooldown = .01
+
+# Determines what entities are not affected by the projectile.
+# ignore may contain: specific entites to ignore, and strings
+# naming groups of entites to ignore
+var ignore
 
 # Spawns a clone of self moving in the direction of x, y
-func fire(global_target_pos, inherited_velocity):
+func fire(global_target_pos, inherited_velocity, ignore):
 	vel = global_target_pos - get_pos()
 	vel = BASE_SPEED * vel.normalized()
 	# If we don't adjust for this case, then clicking exactly the right place
@@ -16,10 +21,9 @@ func fire(global_target_pos, inherited_velocity):
 	# but not quite intended.
 	if (vel == Vector2(0, 0)):
 		vel = Vector2(1, 0)
-		
-	# And inherit velocity from shooter
+	# I want to try out inheriting velocity from shooter. May get rid of this
 	vel = vel + inherited_velocity
-	
+	self.ignore = ignore
 	set_fixed_process(true)
 
 func delete():
@@ -31,8 +35,15 @@ func delete():
 	queue_free()
 
 func _on_projectile_body_enter(body):
-	if (body.get_name() == "player"):
-		return
+	for i in ignore:
+		# Remember, we allow ignore to be either specific entites or entity group names
+		if (typeof(i) == TYPE_STRING):
+			var ignore_ents = get_tree().get_nodes_in_group(i)
+			if (body in ignore_ents):
+				return
+		else:
+			if (body == i):
+				return
 	if (body.has_method("take_damage")):
 		body.take_damage(damage)
 	delete()

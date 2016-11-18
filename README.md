@@ -3,6 +3,8 @@ A clone of the game Nuclear Throne made in the Godot game engine
 
 See progress directory for roadmap and brief description of what's been implemented
 
+If you just want to take a look at some code, look for \*.gd files in src/
+
 Setup:
 Download Godot from https://godotengine.org/download (or Steam!)
 Run Godot
