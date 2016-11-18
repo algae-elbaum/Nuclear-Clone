@@ -2,6 +2,7 @@
 extends KinematicBody2D
 
 const BASE_WALKING_SPEED = 400 # pixels per second
+var vel = Vector2(0, 0)
 
 func orient_texture(velocity):
 	var sprite = get_node("sprite")
@@ -15,6 +16,7 @@ func orient_texture(velocity):
 		sprite.set_flip_v(true)
 
 func _fixed_process(delta):
+	# MOVEMENT HANDLING
 	var velocity = Vector2(0,0)
 	var move_left = Input.is_action_pressed("move_left")
 	var move_right = Input.is_action_pressed("move_right")
@@ -35,6 +37,7 @@ func _fixed_process(delta):
 	
 	orient_texture(velocity)
 	velocity = BASE_WALKING_SPEED * velocity.normalized()
+	vel = velocity # Record velocity for shooting inheritance
 	var motion = move(velocity * delta)
 	
 	# Compensate for crashing into the wall and immediately stopping
@@ -43,7 +46,11 @@ func _fixed_process(delta):
 		motion = n.slide(motion)
 		move(motion)
 	
+func _input(event):
+	if (event.is_action("fire") and event.is_pressed()):
+		var inv = get_node("inventory")
+		inv.fire_active(get_global_mouse_pos(), vel)
+	
 func _ready():
 	set_fixed_process(true)
-
-
+	set_process_input(true)

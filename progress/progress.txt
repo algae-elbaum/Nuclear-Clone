@@ -5,4 +5,7 @@ Worked through tutorial a bit, made pong clone
 Map rendered with tiled background and manually placed walls.
 Player character has WASD controls and collides with walls correctly.
 
-Next: will add enemies and projectiles
+11/18
+Player can shoot projectiles by clicking on screen
+Enemies have health and are damaged by projectiles
+Enemies can detect LOS with player and shoot projectile at player accordingly
