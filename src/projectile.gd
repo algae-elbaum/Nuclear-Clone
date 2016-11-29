@@ -1,19 +1,18 @@
 
 extends Area2D
 
-const BASE_SPEED = 500
+const BASE_SPEED = 600
 var vel = Vector2(0, 0)
 
 var damage = 1
-var cooldown = .01
+var cooldown = .3
 
 # Determines what entities are not affected by the projectile.
-# ignore may contain: specific entites to ignore, and strings
-# naming groups of entites to ignore
-var ignore
+var ignore_entities
+var ignore_groups
 
 # Spawns a clone of self moving in the direction of x, y
-func fire(global_target_pos, inherited_velocity, ignore):
+func fire(global_target_pos, ignore_entities=[], ignore_groups=[]):
 	vel = global_target_pos - get_pos()
 	vel = BASE_SPEED * vel.normalized()
 	# If we don't adjust for this case, then clicking exactly the right place
@@ -21,12 +20,14 @@ func fire(global_target_pos, inherited_velocity, ignore):
 	# but not quite intended.
 	if (vel == Vector2(0, 0)):
 		vel = Vector2(1, 0)
-	# I want to try out inheriting velocity from shooter. May get rid of this
-	vel = vel + inherited_velocity
-	self.ignore = ignore
+
+	self.ignore_entities = ignore_entities
+	self.ignore_groups = ignore_groups
+	# TODO animate/sound
 	set_fixed_process(true)
 
-func delete():
+func destruct():
+	# TODO animate/sound
 	# Shut everything down in case queue_free takes a while
 	set_fixed_process(false)
 	set_layer_mask(0)
@@ -35,23 +36,23 @@ func delete():
 	queue_free()
 
 func _on_projectile_body_enter(body):
-	for i in ignore:
-		# Remember, we allow ignore to be either specific entites or entity group names
-		if (typeof(i) == TYPE_STRING):
-			var ignore_ents = get_tree().get_nodes_in_group(i)
-			if (body in ignore_ents):
-				return
-		else:
-			if (body == i):
-				return
+	for i in ignore_entities:
+		if (body == i):
+			return
+	for i in ignore_groups:
+		var ignore_ents = get_tree().get_nodes_in_group(i)
+		if (body in ignore_ents):
+			return
+
 	if (body.has_method("take_damage")):
 		body.take_damage(damage)
-	delete()
+	destruct()
 
 func _fixed_process(delta):
 	translate(vel * delta)
 
 func _ready():
+	add_to_group("projectiles")
 	# To be 100% clear:
 	set_fixed_process(false)
 	# We do not want to process until we're given a target x,y.

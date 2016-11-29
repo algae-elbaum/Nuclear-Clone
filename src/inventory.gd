@@ -1,24 +1,25 @@
 
 extends Node
 
-var active = {"projectile":  {"scene": preload("res://src/projectile.tscn"),
-							  "cooldown": 0}}
+var active = {}
 
 # Fire the active items
-func fire_active(global_mouse_pos, inherited_velocity, ignore):
+func fire_active(global_mouse_pos, ignore_entities=[], ignore_groups=[]):
 	for k in active:
-		var shot = active[k]["scene"].instance()
-		# Check and handle cooldown
+		# Spawn new projectile only if off cooldown
 		if (active[k]["cooldown"]):
-			shot.delete()
 			continue
+		var shot = active[k]["scene"].instance()
 		active[k]["cooldown"] = shot.cooldown
-		# If we weren't on cooldown, then we can shoot:
+		# Prep shot for autonomous motion
 		shot.set_pos(get_global_pos())
-		# Put it two parents above, ie the map, so it is not moved by us
-		get_node("../..").add_child(shot)
+		get_tree().get_root().get_node("map").add_child(shot)
 		# Let it know its target so it can get going
-		shot.fire(global_mouse_pos, inherited_velocity, ignore)
+		shot.fire(global_mouse_pos, ignore_entities, ignore_groups)
+
+func set_active(name, path):
+	active[name] = {"scene": load(path),
+					"cooldown": 0}
 
 func _process(delta):
 	for k in active:
