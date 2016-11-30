@@ -1,11 +1,10 @@
-[gd_scene load_steps=5 format=1]
+[gd_scene load_steps=4 format=1]
 
-[ext_resource path="res://src/level_generator.gd" type="Script" id=1]
+[ext_resource path="res://src/level_manager.gd" type="Script" id=1]
 [ext_resource path="res://assets/ground_stone.png" type="Texture" id=2]
 [ext_resource path="res://src/basic_tileset.tres" type="TileSet" id=3]
-[ext_resource path="res://src/exit.gd" type="Script" id=4]
 
-[node name="level_generator" type="Node2D"]
+[node name="level_manager" type="Node2D"]
 
 script/script = ExtResource( 1 )
 
@@ -39,14 +38,5 @@ collision/layers = 1
 collision/mask = 1
 occluder/light_mask = 1
 tile_data = IntArray(  )
-
-[node name="exit" type="Area2D" parent="."]
-
-input/pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-script/script = ExtResource( 4 )
 
 
