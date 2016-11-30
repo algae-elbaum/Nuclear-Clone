@@ -3,8 +3,8 @@ extends KinematicBody2D
 
 const BASE_WALKING_SPEED = 200 # pixels per second
 var player
+var destructed = false
 var vel = Vector2(0, 0)
-
 var health = 2
 # Even if the enemy sees the player, shoot semi randomly so player can't just
 # rely on enemy cooldown to know when they'll shoot
@@ -27,6 +27,8 @@ func consider_firing():
 
 func destruct():
 	# TODO animate/sound
+	destructed = true
+	get_node("/root/map/level_manager").enemy_killed(self)
 	# Shut everything down in case queue_free takes a while
 	set_fixed_process(false)
 	set_process(false)
@@ -38,7 +40,7 @@ func destruct():
 func take_damage(dam):
 	# TODO animate/sound
 	health = health - dam
-	if (health <= 0):
+	if (health <= 0 and not destructed):
 		destruct()
 
 func update_vel():

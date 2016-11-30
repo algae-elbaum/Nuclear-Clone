@@ -13,7 +13,7 @@ func fire_active(global_mouse_pos, ignore_entities=[], ignore_groups=[]):
 		active[k]["cooldown"] = shot.cooldown
 		# Prep shot for autonomous motion
 		shot.set_pos(get_global_pos())
-		get_tree().get_root().get_node("map").add_child(shot)
+		get_node("/root/map").add_child(shot)
 		# Let it know its target so it can get going
 		shot.fire(global_mouse_pos, ignore_entities, ignore_groups)
 

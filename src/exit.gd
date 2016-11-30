@@ -11,3 +11,9 @@ func on_player_enter():
 func _on_exit_body_enter(body):
 	if (body.get_name() == "player"):
 		on_player_enter()
+
+func destruct():
+	set_layer_mask(0)
+	set_collision_mask(0)
+	hide()
+	queue_free()

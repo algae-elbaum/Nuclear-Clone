@@ -1,6 +1,6 @@
 extends Container
 
-const OFFSET = Vector2(-140, -100)
+const OFFSET = Vector2(-140, -140)
 
 func _ready():
 	pass

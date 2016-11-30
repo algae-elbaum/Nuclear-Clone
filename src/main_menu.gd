@@ -2,8 +2,6 @@ extends Container
 
 const OFFSET = Vector2(-500, -240)
 
-var player = preload("res://src/player.tscn")
-
 func show_menu(for_new_game):
 	get_tree().set_pause(true)
 	var player_pos = get_node("/root/map/player").get_global_pos()
@@ -23,22 +21,10 @@ func hide_menu():
 	get_tree().set_pause(false)
 
 func new_game():
-	# Kill all the enemies and projectiles
-	for enemy in get_tree().get_nodes_in_group("enemies"):
-		enemy.destruct()
-	for proj in get_tree().get_nodes_in_group("projectiles"):
-		proj.destruct()
-	# Reset the player
-	get_node("/root/map/player").destruct()
-	var new_player = player.instance()
-	new_player.set_global_pos(Vector2(0,0))
-	new_player.set_name("player")
-	get_node("/root/map").add_child(new_player)
-	new_player.get_node("paparazzi").make_current()
+	get_node("/root/map/level_manager").destruct_level()
+	get_node("/root/map/level_manager").generate_naive_random_level()
 	# Move menu to center in case esc was pressed during the game
 	set_global_pos(OFFSET)
-	# And generate a new level
-	get_node("/root/map/level_manager").generate_naive_random_level()
 	show_menu(true)
 
 func _ready():

@@ -10,7 +10,6 @@ extents = Vector2( 10, 10 )
 
 [node name="exit" type="Area2D"]
 
-visibility/visible = false
 transform/pos = Vector2( -228, 2 )
 input/pickable = true
 shapes/0/shape = SubResource( 1 )

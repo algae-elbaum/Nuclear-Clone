@@ -4,6 +4,9 @@ var tilemap
 var tileset
 var wall
 var basic_enemy = preload("res://src/basic_enemy.tscn")
+var exit = preload("res://src/exit.tscn")
+var player = preload("res://src/player.tscn")
+var num_enemies = 0
 
 const EMPTY = -1
 
@@ -19,16 +22,35 @@ var PRESET_1 = {"tilemap": "basic_tilemap",
 
 var cfg = PRESET_1
 
+
 # Entity functions
 
 func spawn_enemy(left, top, width, height):
-	var map = get_tree().get_root().get_node("map")
+	num_enemies += 1
+	var map = get_node("/root/map")
 	var x = left + (randi() % width)
 	var y = top + (randi() % height)
 	var world_xy = tilemap.map_to_world(Vector2(x, y))
 	var new_enemy = basic_enemy.instance()
 	new_enemy.set_global_pos(world_xy)
 	map.call_deferred("add_child", new_enemy)
+
+# Whenever an enemy is killed, check if they were the last enemy, and if so then
+# activate the exit block
+func enemy_killed(enemy):
+	num_enemies -= 1
+	print(num_enemies)
+	if (num_enemies <= 0):
+		activate_exit(enemy.get_global_pos())
+
+func new_enemies(num):
+	num_enemies += num
+
+func activate_exit(pos):
+	var new_exit = exit.instance()
+	new_exit.set_global_pos(pos)
+	get_node("/root/map").add_child(new_exit)
+
 
 # Tilemap functions
 
@@ -68,7 +90,7 @@ func make_new_room(enemy_probability):
 	return false
 
 # Randomly place rooms around, putting enemies in some, and then clearing out
-# a grid to help with connectedness
+# a grid to help with connectedness.
 func generate_naive_random_level():
 	fill_rect(-cfg["width"], -cfg["height"], cfg["width"], cfg["height"], wall)
 	fill_rect(-5, -5, 4, 4, EMPTY)
@@ -77,15 +99,32 @@ func generate_naive_random_level():
 	# Just clear a whole bunch of random rectangles
 	randomize()
 	var num_rooms = cfg["min_rooms"] + (randi() % (1 + cfg["max_rooms"] - cfg["min_rooms"]))
-	var num_enemies = cfg["loose_min_enemies"] + (randi() % (1 + cfg["loose_max_enemies"] - cfg["loose_min_enemies"]))
+	var max_num_enemies = cfg["loose_min_enemies"] + (randi() % (1 + cfg["loose_max_enemies"] - cfg["loose_min_enemies"]))
 	# Num and placement of enemies is super imprecise
-	var enemy_probability = float(num_enemies) / num_rooms
+	var enemy_probability = float(max_num_enemies) / num_rooms
 	for i in range(num_rooms):
 		var made_enemy = make_new_room(enemy_probability)
 		if made_enemy:
-			num_enemies - 1
-		if (num_enemies == 0):
+			max_num_enemies - 1
+		if (max_num_enemies == 0):
 			enemy_probability = 0
+
+func destruct_level():
+	# Kill all the enemies and projectiles
+	for enemy in get_tree().get_nodes_in_group("enemies"):
+		enemy.destruct()
+	num_enemies = 0
+	for proj in get_tree().get_nodes_in_group("projectiles"):
+		proj.destruct()
+	# Delete the exit entity in case it exists
+	var exit = get_node("/root/map/exit").destruct()
+	# Reset the player
+	get_node("/root/map/player").destruct()
+	var new_player = player.instance()
+	new_player.set_global_pos(Vector2(0,0))
+	new_player.set_name("player")
+	get_node("/root/map").add_child(new_player)
+	new_player.get_node("paparazzi").make_current()
 
 func _ready():
 	set_tilemap(cfg["tilemap"])
