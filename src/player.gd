@@ -3,6 +3,14 @@ extends KinematicBody2D
 
 const BASE_WALKING_SPEED = 400 # pixels per second
 var vel = Vector2(0, 0)
+var health = 6
+
+func take_damage(dam):
+	# TODO animate/sound
+	health = health - dam
+	get_node("/root/map/HUD_canvas/player_health_label").set_health(health)
+	if (health <= 0):
+		get_node("/root/map/HUD_canvas/loss_menu").show_menu()
 
 func destruct():
 	# TODO animate/sound
@@ -68,5 +76,7 @@ func _input(event):
 func _ready():
 	var inv = get_node("inventory")
 	inv.set_active("projectile", "res://src/tree_proj.tscn")
+	get_node("/root/map/HUD_canvas/player_health_label").set_max_health(health)
+	get_node("/root/map/HUD_canvas/player_health_label").set_health(health)
 	set_fixed_process(true)
 	set_process_input(true)

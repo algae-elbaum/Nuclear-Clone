@@ -17,8 +17,8 @@ var PRESET_1 = {"tilemap": "basic_tilemap",
 				"min_rooms": 40,
 				"max_rooms": 60,
 				"max_room_dim": 5,
-				"loose_min_enemies": 5,
-				"loose_max_enemies": 7,}
+				"loose_min_enemies": 9,
+				"loose_max_enemies": 9,}
 
 var cfg = PRESET_1
 
