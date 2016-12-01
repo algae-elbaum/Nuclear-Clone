@@ -1,11 +1,7 @@
 extends Container
 
-const OFFSET = Vector2(-500, -240)
-
 func show_menu(for_new_game):
 	get_tree().set_pause(true)
-	var player_pos = get_node("/root/map/player").get_global_pos()
-	set_global_pos(player_pos + OFFSET)
 	if (for_new_game):
 		# Start button, not resume button, should show
 		get_node("resume_button").hide()
@@ -23,8 +19,6 @@ func hide_menu():
 func new_game():
 	get_node("/root/map/level_manager").destruct_level()
 	get_node("/root/map/level_manager").generate_naive_random_level()
-	# Move menu to center in case esc was pressed during the game
-	set_global_pos(OFFSET)
 	show_menu(true)
 
 func _ready():

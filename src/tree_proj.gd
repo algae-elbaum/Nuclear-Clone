@@ -9,7 +9,7 @@ func clone_at_angle(split_angle):
 	var new_dir = vel.rotated(split_angle)
 	var clone = plain_projectile.instance()
 	clone.set_pos(get_global_pos())
-	get_tree().get_root().get_node("map").add_child(clone)
+	get_node("/root/map").add_child(clone)
 	clone.fire(get_global_pos() + new_dir, ignore_entities, ignore_groups)
 
 func _fixed_process(delta):

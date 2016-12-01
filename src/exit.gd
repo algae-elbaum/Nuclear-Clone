@@ -6,7 +6,7 @@ func _ready():
 func on_player_enter():
 	# For now, this is the win condition.
 	# In future, will send player to the next level.
-	get_node("/root/map/win_menu").show_menu()
+	get_node("/root/map/HUD_canvas/win_menu").show_menu()
 
 func _on_exit_body_enter(body):
 	if (body.get_name() == "player"):

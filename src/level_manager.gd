@@ -27,6 +27,7 @@ var cfg = PRESET_1
 
 func spawn_enemy(left, top, width, height):
 	num_enemies += 1
+	get_node("/root/map/HUD_canvas/enemy_count_label").set_count(num_enemies)
 	var map = get_node("/root/map")
 	var x = left + (randi() % width)
 	var y = top + (randi() % height)
@@ -39,7 +40,7 @@ func spawn_enemy(left, top, width, height):
 # activate the exit block
 func enemy_killed(enemy):
 	num_enemies -= 1
-	print(num_enemies)
+	get_node("/root/map/HUD_canvas/enemy_count_label").set_count(num_enemies)
 	if (num_enemies <= 0):
 		activate_exit(enemy.get_global_pos())
 
@@ -117,7 +118,7 @@ func destruct_level():
 	for proj in get_tree().get_nodes_in_group("projectiles"):
 		proj.destruct()
 	# Delete the exit entity in case it exists
-	var exit = get_node("/root/map/exit").destruct()
+	get_node("/root/map/exit").destruct()
 	# Reset the player
 	get_node("/root/map/player").destruct()
 	var new_player = player.instance()
