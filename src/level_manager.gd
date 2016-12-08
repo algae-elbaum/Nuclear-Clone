@@ -42,6 +42,7 @@ func enemy_killed(enemy):
 	num_enemies -= 1
 	get_node("/root/map/HUD_canvas/enemy_count_label").set_count(num_enemies)
 	if (num_enemies <= 0):
+		get_node("/root/map/background_music").victory()
 		activate_exit(enemy.get_global_pos())
 
 func new_enemies(num):

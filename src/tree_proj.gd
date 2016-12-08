@@ -18,4 +18,7 @@ func _fixed_process(delta):
 		cooldown_timer = SPLIT_COOLDOWN
 		clone_at_angle(SPLIT_ANGLE)
 		clone_at_angle(-SPLIT_ANGLE)
-		
+
+func _ready():
+	damage = 2
+	fire_sfx = "tree_projectile"

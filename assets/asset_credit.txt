@@ -3,3 +3,6 @@ bowling_ball.png is from Godot demos
 stone_floors.png is from http://www.wildbunny.co.uk/blog/2012/03/01/designing-a-retro-pixel-art-tile-set/
 hyptosis_tile-art-batch-1.png from http://opengameart.org/content/lots-of-free-2d-tiles-and-sprites-by-hyptosis
 bullet.png from https://www.youtube.com/watch?v=MWyn-0nOMoY
+
+sfx all are from http://www.bfxr.net/
+background music is all songs that should be searchable by title. I just ripped them from youtube

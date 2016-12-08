@@ -6,6 +6,8 @@ var vel = Vector2(0, 0)
 
 var damage = 1
 var cooldown = .3
+var fire_sfx = "basic_projectile"
+var hit_sfx = "projectile_hit"
 
 # Determines what entities are not affected by the projectile.
 var ignore_entities
@@ -24,10 +26,12 @@ func fire(global_target_pos, ignore_entities=[], ignore_groups=[]):
 	self.ignore_entities = ignore_entities
 	self.ignore_groups = ignore_groups
 	# TODO animate/sound
+	get_node("/root/map/sfx").play(fire_sfx)
 	set_fixed_process(true)
 
 func destruct():
-	# TODO animate/sound
+	# TODO animate
+	get_node("/root/map/sfx").play(hit_sfx)
 	# Shut everything down in case queue_free takes a while
 	set_fixed_process(false)
 	set_layer_mask(0)

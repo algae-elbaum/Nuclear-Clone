@@ -4,13 +4,22 @@ extends KinematicBody2D
 const BASE_WALKING_SPEED = 400 # pixels per second
 var vel = Vector2(0, 0)
 var health = 6
+var hit_sfx = "player_hit"
+
+var hit_duration = .1 # How long the player is turned red when hit
+var hit_cooldown = 0
+var hit_red_shift = 10
 
 func take_damage(dam):
-	# TODO animate/sound
+	# TODO animate
+	get_node("sprite").set_modulate(Color(hit_red_shift, 1, 1))
+	hit_cooldown = hit_duration
+	get_node("/root/map/sfx").play(hit_sfx)
 	health = health - dam
 	get_node("/root/map/HUD_canvas/player_health_label").set_health(health)
 	if (health <= 0):
 		get_node("/root/map/HUD_canvas/loss_menu").show_menu()
+		get_node("/root/map/background_music").defeated()
 
 func destruct():
 	# TODO animate/sound
@@ -65,6 +74,12 @@ func _fixed_process(delta):
 		motion = n.slide(motion)
 		move(motion)
 
+func _process(delta):
+	if hit_cooldown > 0:
+		hit_cooldown -= delta
+		if hit_cooldown <= 0:
+			get_node("sprite").set_modulate(Color(1/hit_red_shift, 1, 1))
+
 func _input(event):
 	# TODO automatic firing with mouse hold
 	if (event.is_action_pressed("fire")):
@@ -79,4 +94,5 @@ func _ready():
 	get_node("/root/map/HUD_canvas/player_health_label").set_max_health(health)
 	get_node("/root/map/HUD_canvas/player_health_label").set_health(health)
 	set_fixed_process(true)
+	set_process(true)
 	set_process_input(true)

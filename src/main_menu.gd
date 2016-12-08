@@ -19,6 +19,7 @@ func hide_menu():
 func new_game():
 	get_node("/root/map/level_manager").destruct_level()
 	get_node("/root/map/level_manager").generate_naive_random_level()
+	get_node("/root/map/background_music").new_game()
 	show_menu(true)
 
 func _ready():

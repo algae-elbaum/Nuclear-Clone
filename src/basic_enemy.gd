@@ -9,6 +9,8 @@ var health = 2
 # Even if the enemy sees the player, shoot semi randomly so player can't just
 # rely on enemy cooldown to know when they'll shoot
 var firing_probability = .005
+var hit_sfx = "enemy_hit"
+var dead_sfx = "enemy_dead"
 
 func detect_player():
 	var space_state = get_world_2d().get_direct_space_state()
@@ -26,7 +28,8 @@ func consider_firing():
 		get_node("inventory").fire_active(player_pos, [], ["enemies"])
 
 func destruct():
-	# TODO animate/sound
+	# TODO animate
+	get_node("/root/map/sfx").play(dead_sfx)
 	destructed = true
 	get_node("/root/map/level_manager").enemy_killed(self)
 	# Shut everything down in case queue_free takes a while
@@ -38,7 +41,8 @@ func destruct():
 	queue_free()
 
 func take_damage(dam):
-	# TODO animate/sound
+	# TODO animate
+	get_node("/root/map/sfx").play(hit_sfx)
 	health = health - dam
 	if (health <= 0 and not destructed):
 		destruct()
