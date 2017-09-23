@@ -2,6 +2,7 @@
 The bare beginnings of a clone of the game Nuclear Throne, made in the Godot game engine.
 
 See progress directory for roadmap and brief description of what's been implemented.  
+
 Further work is not planned.
 
 If you just want to take a look at some code, look for \*.gd files in src/
