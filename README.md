@@ -1,6 +1,8 @@
 # Nuclear Clone
 The bare beginnings of a clone of the game Nuclear Throne, made in the Godot game engine.
 
+Must have been made with Godot version 2.1. Doesn't work with 3.0.
+
 See progress directory for roadmap and brief description of what's been implemented.  
 
 Further work is not planned.
